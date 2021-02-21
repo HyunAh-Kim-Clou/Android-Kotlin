@@ -11,12 +11,12 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class TimerActivity : Activity() {
     lateinit var doingtask: EditText
     lateinit var takingtime: TextView
     lateinit var endbtn: Button
+
     var db: TimerDatabase? = null
     lateinit var timeformat: DateTimeFormatter
 
@@ -33,17 +33,17 @@ class TimerActivity : Activity() {
         doingtask = findViewById(R.id.doingtask)
         takingtime = findViewById(R.id.takingtime)
         endbtn = findViewById(R.id.endbtn)
+
         db = TimerDatabase.getInstance(this)
         timeformat = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss")
 
-        // Start timer
+        // 현재 시각을 startAt에 저장
         startAt = LocalDateTime.now().format(timeformat)
         Thread(Runnable {
             kotlin.run {
                 while(true) {
-                    // print current time
-                    var currenttime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH-mm-ss"))
-                    takingtime.text = currenttime
+                    // 화면에서 증가하는 period 값 확인
+                    takingtime.text = period.toString()
                     Thread.sleep(1000)
                     period += 1
                 }
@@ -51,43 +51,35 @@ class TimerActivity : Activity() {
         }).start()
 
         endbtn.setOnClickListener {
+            // 현재 시각을 endAt에 저장, EditText의 값을 donetask에 저장
             endAt = LocalDateTime.now().format(timeformat)
             donetask = doingtask.text.toString()
+
+            // DB에 해당 timerobj를 저장
             db?.TimerObjDao()?.insert(TimerObj(startAt, endAt, donetask, getPeriod(period)))
 
-            // verify recorded timer data
-            var logstr: String = "  [End Btn Clicked] >"+
-                    "       - startat: "+startAt+
-                    "       - endat: "+endAt+
-                    "       - doingtask: "+doingtask.text+
-                    "       - takingtime: "+takingtime.text
-            System.out.println(logstr)
+            // Log를 통해 삽입된 timerobj 확인
+            Log.d("TA10001", " - inserted timer obj: ${startAt}, ${endAt}, ${doingtask}, ${takingtime}")
 
+            // MainActivity로 이동
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
+    // sec값을 "$hour H $min M $sec S" 형태로 반환
     fun getPeriod(delayedsec: Int): String {
         var tmp = delayedsec
         var sec = tmp%60
-        if (delayedsec < 60) return "$sec S"
+        if (delayedsec < 60) return "${sec}S"
 
         tmp -= sec
         var min = tmp/60
-        if (delayedsec < 3600) return "$min M $sec S"
+        if (delayedsec < 3600) return "${min}M ${sec}S"
 
         tmp -= 60*min
         var hour = tmp/24
-        return "$hour H $min M $sec S"
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun convertFormatOfTime(time: String, beforeFormat: String, afterFormat: String): String {
-        var bFormat = DateTimeFormatter.ofPattern(beforeFormat)
-        var timeobj = bFormat.parse(time) as LocalDateTime
-        var aFormat = timeobj.format(DateTimeFormatter.ofPattern(afterFormat))
-        return aFormat
+        return "${hour}H ${min}M ${sec}S"
     }
 }
