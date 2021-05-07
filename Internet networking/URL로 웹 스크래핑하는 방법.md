@@ -1,4 +1,4 @@
-# Retrofit 사용방법
+# URL로 웹 스크래핑하는 방법
 
 ---
 
@@ -29,4 +29,27 @@
 테스트 코드는 ./ExRetrofit.java 인데, 오류가 뜬다.
 
 okhttp3.HttpUrl 을 공부해야 겠다.
+
+---
+
+## IntelliJ IDE 에서 gradle 프로젝트 생성하기
+
+(한국어)
+
+[IntelliJ 사용(gradle 기반 프로젝트 환경구성)](https://kjkjjang.wordpress.com/2019/04/15/intellij-%EC%82%AC%EC%9A%A9gradle-%EA%B8%B0%EB%B0%98-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%99%98%EA%B2%BD%EA%B5%AC%EC%84%B1/)
+
+(영어)
+
+[Gradle | IntelliJ IDEA](https://www.jetbrains.com/help/idea/gradle.html#gradle_jvm)
+
+## import한 gradle 삭제하기
+
+1. 해당 프로젝트에서 .gradle 폴더를 삭제
+2. 프로젝트 working space에서 [gradle 프로젝트명] 폴더 삭제
+
+---
+
+[OkHttpClient - OkHttp - OkHttp](https://square.github.io/okhttp/4.x/okhttp/okhttp3/-ok-http-client/)
+
+![Image.png](https://res.craft.do/user/full/fa176664-3985-eb36-93ba-d918d8fd4d32/doc/1E855E67-A874-4091-A6A2-88BC717E0C61/DFDF50FA-0F6C-4224-B784-9885E4A5D3BF_2/Image.png)
 
