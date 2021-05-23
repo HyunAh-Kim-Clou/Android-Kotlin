@@ -6,13 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:listitem="@layout/recyclerview_item"
+        android:padding="@dimen/big_padding"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Android에서 제공하는 Vector Asset 이용하기
+        1. File> New> Vector Asset 창 확인
+        2. Clip Art: 로봇 아이콘을 클릭
+        3. 원하는 테마의 에셋 검색 후 OK
+        4. main> drawable 아이콘 저장경로 확인
+        5. "@drawable/에셋명" 값으로 접근 -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_word"
+        android:src="@drawable/ic_baseline_add_24"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
